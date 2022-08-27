@@ -24,10 +24,10 @@ core.register_chatcommand("getinv", {
     local isempty = inv:is_empty(ilist)
     if not list or isempty == true then return false, "List not exists or empty" end
     for _,stack in ipairs(list) do
-      local descr = stack:get_description()
+      local descr = stack:get_short_description()
       if descr and descr ~= "" then
         out = out..descr..", "
       end
     end
-    return true, "Inventory '"..ilist.."' of "..pname..": "..out
+    return true, "Inventory '"..ilist.."' of "..pname..": "..core.strip_colors(out)
 end})
