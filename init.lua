@@ -21,7 +21,8 @@ core.register_chatcommand("getinv", {
       return true, "Inventories of "..pname..": "..out
     end
     local list = inv:get_list(ilist)
-    if not list then return false, "List not exists" end
+    local isempty = inv:is_empty(ilist)
+    if not list or isempty == true then return false, "List not exists or empty" end
     for _,stack in ipairs(list) do
       local descr = stack:get_description()
       if descr and descr ~= "" then
