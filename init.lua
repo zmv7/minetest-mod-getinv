@@ -15,19 +15,23 @@ core.register_chatcommand("getinv", {
     if ilist == "-list" then
       local lists = inv:get_lists()
       if not lists then return false, "Error getting inventories list" end
+      local ilists = {}
       for listname,_ in pairs(lists) do
-        out = out..listname.."("..inv:get_size(listname).."), "
+        ilists[#ilists + 1] = listname.."("..inv:get_size(listname)..")"
       end
+      out = table.concat(ilists, ", ")
       return true, "Inventories of "..pname..": "..out
     end
     local list = inv:get_list(ilist)
     local isempty = inv:is_empty(ilist)
     if not list or isempty == true then return false, "List not exists or empty" end
-    for _,stack in ipairs(list) do
+    local items = {}
+    for _, stack in ipairs(list) do
       local descr = stack:get_short_description()
       if descr and descr ~= "" then
-        out = out..descr..", "
+          items[#items + 1] = descr
       end
     end
-    return true, "Inventory '"..ilist.."' of "..pname..": "..core.strip_colors(out)
+    out = table.concat(items, ", ")
+    return true, "Inventory '"..ilist.."' of "..pname..": "..out
 end})
