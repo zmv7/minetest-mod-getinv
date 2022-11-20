@@ -1,7 +1,7 @@
 core.register_privilege("getinv","Allows use /getinv command")
 core.register_chatcommand("getinv", {
 	description = "List items of player's inventory",
-	params = "'<player> [listname]' or '<player> -list' to list all inventories",
+	params = "'<player> [listname]' or '<player> --list' to list all inventories",
 	privs = {getinv=true},
 	func = function(name,param)
 	local pname, ilist = param:match("^(%S+) (.+)$")
@@ -12,7 +12,7 @@ core.register_chatcommand("getinv", {
 	local out = ""
 	local inv = core.get_inventory({type="player",name=pname})
 	if not inv then return false, "No Player" end
-	if ilist == "-list" then
+	if ilist == "--list" then
 		local lists = inv:get_lists()
 		if not lists then return false, "Error getting inventories list" end
 		local ilists = {}
